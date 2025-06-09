@@ -1,78 +1,285 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Collatz Fractal Generator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Collatz Fractal Generator</h1>
+    <div class="background-animation"></div>
+    
     <div class="container">
-        <div class="controls">
-            <div class="form-group">
-                <label for="startValue">Start Value:</label>
-                <input type="number" id="startValue" value="1" min="1">
+        <div class="sidebar">
+            <div class="header">
+                <h1>Collatz Fractals</h1>
+                <div class="subtitle">Digital Fractal Arts</div>
             </div>
-            <div class="form-group">
-                <label for="increment">Increment:</label>
-                <input type="number" id="increment" value="512" min="1">
+
+            <div class="section">
+                <h3>Generalized Parameters</h3>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Z (Base)</span>
+                        <span class="value-display" id="baseNumberVal">256</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="range" id="baseNumber" min="2" max="5000" value="256">
+                        <div class="manual-input">
+                            <input type="number" id="baseNumberManual" min="2" max="10000" placeholder="Manual">
+                            <button class="manual-btn" onclick="applyManualValue('baseNumber')">Set</button>
+                            <button class="clear-btn" onclick="clearManualValue('baseNumber')">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>m (Power)</span>
+                        <span class="value-display" id="powerVal">3</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="range" id="power" min="1" max="8" value="3">
+                        <div class="manual-input">
+                            <input type="number" id="powerManual" min="1" max="15" placeholder="Manual">
+                            <button class="manual-btn" onclick="applyManualValue('power')">Set</button>
+                            <button class="clear-btn" onclick="clearManualValue('power')">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Y (Divisor)</span>
+                        <span class="value-display" id="yValueVal">256</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="range" id="yValue" min="2" max="5000" value="256">
+                        <div class="manual-input">
+                            <input type="number" id="yValueManual" min="2" max="10000" placeholder="Manual">
+                            <button class="manual-btn" onclick="applyManualValue('yValue')">Set</button>
+                            <button class="clear-btn" onclick="clearManualValue('yValue')">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>X = Z^m</span>
+                        <span class="value-display" id="xValueVal">16777216</span>
+                    </div>
+                    <input type="number" id="xValue" disabled>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="resetValue">Reset Threshold:</label>
-                <input type="number" id="resetValue" value="1000000" min="1">
+
+            <div class="section">
+                <h3>Sequence Control</h3>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Start Value</span>
+                        <span class="value-display" id="startValueVal">1</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="range" id="startValue" min="1" max="10000" value="1">
+                        <div class="manual-input">
+                            <input type="number" id="startValueManual" min="1" max="50000" placeholder="Manual">
+                            <button class="manual-btn" onclick="applyManualValue('startValue')">Set</button>
+                            <button class="clear-btn" onclick="clearManualValue('startValue')">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Increment</span>
+                        <span class="value-display" id="incrementVal">512</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="range" id="increment" min="1" max="5000" value="512">
+                        <div class="manual-input">
+                            <input type="number" id="incrementManual" min="1" max="20000" placeholder="Manual">
+                            <button class="manual-btn" onclick="applyManualValue('increment')">Set</button>
+                            <button class="clear-btn" onclick="clearManualValue('increment')">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Reset Threshold</span>
+                        <span class="value-display" id="resetValueVal">1000000</span>
+                    </div>
+                    <input type="number" id="resetValue" value="1000000" min="1000">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="baseNumber">Z Value (Base Number):</label>
-                <input type="number" id="baseNumber" value="256" min="2">
+
+            <div class="section">
+                <h3>Visual Style</h3>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Angle Divisor (π/n)</span>
+                        <span class="value-display" id="angleDivVal">63743</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="range" id="angleDiv" min="100" max="2000000" value="63743">
+                        <div class="manual-input">
+                            <input type="number" id="angleDivManual" min="1" max="2000000" placeholder="Manual">
+                            <button class="manual-btn" onclick="applyManualValue('angleDiv')">Set</button>
+                            <button class="clear-btn" onclick="clearManualValue('angleDiv')">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Line Length</span>
+                        <span class="value-display" id="lineLengthVal">5</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="range" id="lineLength" min="1" max="20" value="5">
+                        <div class="manual-input">
+                            <input type="number" id="lineLengthManual" min="0.1" max="50" step="0.1" placeholder="Manual">
+                            <button class="manual-btn" onclick="applyManualValue('lineLength')">Set</button>
+                            <button class="clear-btn" onclick="clearManualValue('lineLength')">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Opacity</span>
+                        <span class="value-display" id="opacityVal">0.08</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="range" id="opacity" min="0.01" max="1" step="0.01" value="0.08">
+                        <div class="manual-input">
+                            <input type="number" id="opacityManual" min="0.001" max="1" step="0.001" placeholder="Manual">
+                            <button class="manual-btn" onclick="applyManualValue('opacity')">Set</button>
+                            <button class="clear-btn" onclick="clearManualValue('opacity')">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Background</span>
+                    </div>
+                    <select id="backgroundColor">
+                        <option value="black">Black</option>
+                        <option value="white">White</option>
+                        <option value="#1a1a2e">Deep Blue</option>
+                        <option value="#16213e">Navy</option>
+                    </select>
+                </div>
+
+                <div class="preset-buttons">
+                    <button class="preset-btn" onclick="loadPreset('fractal1')">Collatz Feather</button>
+                    <button class="preset-btn" onclick="loadPreset('fractal2')">Non-collatz Feather</button>
+                    <button class="preset-btn" onclick="loadPreset('fractal3')">Tree</button>
+                    <button class="preset-btn" onclick="loadPreset('fractal4')">Heart</button>
+                    <button class="preset-btn" onclick="loadPreset('fractal5')">Spiral</button>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="yValue">Y Value:</label>
-                <input type="number" id="yValue" value="256" min="1">
+
+            <div class="section">
+                <button class="btn btn-primary" onclick="openRenderWindow()">🎨 Launch Full Canvas</button>
+                
+                <div class="status" id="status"></div>
+                
+                <div class="keyboard-hints">
+                    <strong>Canvas Controls:</strong><br>
+                    Space: Start/Stop • C: Clear • R: Reset • S: Save • Esc: Close
+                </div>
             </div>
-            <div class="form-group">
-                <label for="power">Power (m):</label>
-                <input type="number" id="power" value="3" min="1">
-            </div>
-            <div class="form-group">
-                <label for="xValue">X Value:</label>
-                <input type="number" id="xValue" disabled>
-                <small>x = z^m (automatically calculated)</small>
-            </div>
-            <div class="form-group">
-                <label for="angleDiv">Angle Divisor (n):</label>
-                <input type="number" id="angleDiv" value="63743" min="1">
-                <small>(n where angle = π/n)</small>
-            </div>
-            <div class="form-group">
-                <label for="lineLength">Line Length:</label>
-                <input type="number" id="lineLength" value="5" min="1">
-            </div>
-            <div class="form-group">
-                <label for="opacity">Opacity:</label>
-                <input type="number" id="opacity" value="0.08" min="0" max="1" step="0.01">
-            </div>
-            <div class="form-group">
-                <label for="backgroundColor">Background Color:</label>
-                <select id="backgroundColor">
-                    <option value="black">Black</option>
-                    <option value="white">White</option>
-                </select>
-            </div>
-            <button onclick="startDrawing()">Generate Fractal</button>
-            <button onclick="stopDrawing()">Stop</button>
-            <button onclick="downloadCanvas()">Download Image</button>
-            <button onclick="clearCanvas()">Clear Canvas</button>
-            <div id="status"></div>
         </div>
-        <div class="canvas-container">
-            <canvas id="fractalCanvas"></canvas>
-            <div class="zoom-controls">
-                <button onclick="zoomIn()">+</button>
-                <button onclick="zoomOut()">-</button>
-                <button onclick="resetView()">Reset</button>
+        
+        <div class="main-content">
+            <div class="canvas-section">
+                <div class="canvas-header-embedded">
+                    <div class="canvas-title">Live Preview</div>
+                    <div class="canvas-controls">
+                        <button onclick="startDrawing()" id="startBtnEmbedded">▶ Start</button>
+                        <button onclick="stopDrawing()" id="stopBtnEmbedded">⏹ Stop</button>
+                        <button onclick="clearCanvas()">⚡ Clear</button>
+                        <button onclick="downloadCanvas()">💾 Save</button>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="fractalCanvas"></canvas>
+                    <div class="canvas-info" id="canvasInfo">
+                        Ready to render • Scale: 1.00x • Sequences: 0
+                    </div>
+                    
+                    <!-- Live Controls Overlay -->
+                    <div class="live-controls" id="liveControls">
+                        <div class="live-control-group">
+                            <label>Angle: <span id="liveAngleVal">63743</span></label>
+                            <input type="range" id="liveAngle" min="100" max="1000000" value="63743">
+                        </div>
+                        <div class="live-control-group">
+                            <label>Length: <span id="liveLengthVal">5</span></label>
+                            <input type="range" id="liveLength" min="1" max="20" value="5">
+                        </div>
+                        <div class="live-control-group">
+                            <label>Opacity: <span id="liveOpacityVal">0.08</span></label>
+                            <input type="range" id="liveOpacity" min="0.01" max="1" step="0.01" value="0.08">
+                        </div>
+                        <button class="toggle-controls" onclick="toggleLiveControls()">⚙️</button>
+                    </div>
+                </div>
             </div>
-            <div class="transform-info" id="transformInfo"></div>
+            
+            <div class="welcome-content">
+                <h2>Generalized Collatz Fractals</h2>
+                <p>
+                    Visualize the hidden mathematical structures within generalized Collatz sequences. 
+                    These fractals emerge from a simple iterative process, revealing the elegant 
+                    boundary between order and chaos.
+                </p>
+                
+                <div class="equation-display">
+                    <strong>Generalized Collatz Function:</strong><br><br>
+                    f(n) = {<br>
+                    &nbsp;&nbsp;n/Y,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if n ≡ 0 (mod Y)<br>
+                    &nbsp;&nbsp;(n×(X+1) + (X-r))/Y,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherwise<br>
+                    }<br><br>
+                    where r = n mod X, and X = Z^m
+                </div>
+                
+                <p>
+                    Use manual input fields to explore extreme parameter ranges beyond slider limits.
+                    The live preview shows real-time changes, while the full canvas provides maximum detail.
+                </p>
+            </div>
         </div>
     </div>
+
+    <!-- Full Canvas Window -->
+    <div class="canvas-window" id="canvasWindow">
+        <div class="canvas-header">
+            <div class="canvas-title">Collatz Fractal Renderer</div>
+            <div class="canvas-controls">
+                <button onclick="startDrawing()" id="startBtn">▶ Start</button>
+                <button onclick="stopDrawing()" id="stopBtn">⏹ Stop</button>
+                <button onclick="zoomIn()">🔍+</button>
+                <button onclick="zoomOut()">🔍−</button>
+                <button onclick="resetView()">⌂</button>
+                <button onclick="clearCanvas()">⚡</button>
+                <button onclick="downloadCanvas()">💾</button>
+                <button onclick="closeRenderWindow()">✕</button>
+            </div>
+        </div>
+        <div class="canvas-body">
+            <canvas id="fractalCanvasFull"></canvas>
+            <div class="canvas-info" id="canvasInfoFull">
+                Ready to render • Scale: 1.00x • Sequences: 0
+            </div>
+        </div>
+    </div>
+
     <script src="worker.js"></script>
     <script src="main.js"></script>
 </body>
